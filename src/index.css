@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gradient-to-br from-neutral-900 via-slate-900 to-slate-800 text-white min-h-screen;
+}
+
+.neon {
+  text-shadow: 0 0 15px rgba(0,255,170,0.15);
+}
+
+.controls-panel {
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+
+input[type='file'] {
+  display: none;
+}
