@@ -17,6 +17,7 @@ const BG_OPTIONS = [
 export default function App() {
   const [is24Hour, setIs24Hour] = useState(true)
   const [font, setFont] = useState('inter')
+  const [fontSize, setFontSize] = useState('xl')
   const [bg, setBg] = useState('')
   const [showSettings, setShowSettings] = useState(false)
   const fileInputRef = useRef(null)
@@ -35,9 +36,9 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(
       'clockSettings',
-      JSON.stringify({ is24Hour, font, bg })
+      JSON.stringify({ is24Hour, font, bg, fontSize })
     )
-  }, [is24Hour, font, bg])
+  }, [is24Hour, font, fontSize, bg])
 
   // Handle user-uploaded images
   const handleFileChange = (e) => {
@@ -82,6 +83,8 @@ export default function App() {
           setIs24Hour={setIs24Hour}
           font={font}
           setFont={setFont}
+          fontSize={fontSize}
+          setFontSize={setFontSize}
           bg={bg}
           setBg={setBg}
           bgOptions={BG_OPTIONS}
@@ -90,7 +93,7 @@ export default function App() {
         />
       )}
 
-      <Clock is24Hour={is24Hour} />
+      <Clock is24Hour={is24Hour} fontSize={fontSize} />
 
       <button
         onClick={handleFullscreenToggle}

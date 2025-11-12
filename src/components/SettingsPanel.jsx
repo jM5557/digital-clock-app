@@ -8,6 +8,8 @@ export default function SettingsPanel({
   setIs24Hour,
   font,
   setFont,
+  fontSize,
+  setFontSize,
   bg,
   setBg,
   bgOptions,
@@ -41,6 +43,18 @@ export default function SettingsPanel({
         ]}
         value={font}
         onChange={(e) => setFont(e.target.value)}
+      />
+
+      <Dropdown
+        label='FontSize'
+        options={[
+          { label: 'SM', value: 'sm' },
+          { label: 'MD', value: 'md' },
+          { label: 'LG', value: 'lg' },
+          { label: 'XL', value: 'xl' },
+        ]}
+        value={fontSize}
+        onChange={(e) => setFontSize(e.target.value)}
       />
 
       <button
