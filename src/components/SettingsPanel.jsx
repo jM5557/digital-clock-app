@@ -2,6 +2,7 @@ import React from 'react'
 import ToggleSwitch from './ToggleSwitch'
 import Dropdown from './Dropdown'
 import UploadButton from './UploadButton'
+import OpacitySlider from './OverlaySlider/index.jsx' // <-- import the new slider
 
 export default function SettingsPanel({
   is24Hour,
@@ -15,16 +16,19 @@ export default function SettingsPanel({
   bgOptions,
   fileInputRef,
   handleFileChange,
+  overlayOpacity,
+  setOverlayOpacity,   // <-- new props
 }) {
   const handleReset = () => {
     setIs24Hour(true)
     setFont('inter')
     setBg('')
+    setOverlayOpacity(25) // reset opacity to default
     localStorage.removeItem('clockSettings')
   }
 
   return (
-    <div className='controls-panel absolute top-20 right-5 p-4 rounded-xl text-neon text-sm space-y-3 w-60'>
+    <div className='controls-panel absolute top-20 right-5 p-4 rounded-xl text-neon text-sm space-y-3 w-60'style={{ zIndex: 2 }}>
       <ToggleSwitch label='24 Hour' checked={is24Hour} onChange={() => setIs24Hour(!is24Hour)} />
 
       <UploadButton label='Upload Background' inputRef={fileInputRef} onChange={handleFileChange} />
@@ -57,9 +61,12 @@ export default function SettingsPanel({
         onChange={(e) => setFontSize(e.target.value)}
       />
 
+      {/* New Opacity Slider */}
+      <OpacitySlider overlayOpacity={overlayOpacity} setOverlayOpacity={setOverlayOpacity} />
+
       <button
         onClick={handleReset}
-        className='w-full mt-2 bg-red-600/70 hover:bg-red-700/80 text-white py-1 rounded-md transition'
+        className='w-full mt-4 bg-red-600/70 hover:bg-red-700/80 text-white py-1 rounded-md transition'
       >
         Reset to Defaults
       </button>

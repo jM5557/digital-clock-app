@@ -4,16 +4,17 @@ export default function Clock({ is24Hour, fontSize="xl" }) {
   const [now, setNow] = useState(new Date())
 
   const fontSizeMetric = {
-    sm: 'md:text-[65pt] sm:text-4xl text-xl',   // ~50% of xl
-    md: 'md:text-[85pt] sm:text-5xl text-2xl',  // ~70% of xl
-    lg: 'md:text-[105pt] sm:text-6xl text-3xl', // ~85% of xl
-    xl: 'md:text-[125pt] sm:text-8xl text-4xl', // baseline
+    sm: 'md:text-[70pt]/[80pt] sm:text-4xl text-4xl',   // 55% of xl
+    md: 'md:text-[90pt] sm:text-5xl text-5xl',  // 70% of xl
+    lg: 'md:text-[105pt] sm:text-6xl text-6xl', // 85% of xl
+    xl: 'md:text-[125pt] sm:text-[50pt] text-[60pt]', // baseline
   }
 
+
   const midFontSizeMetric = {
-    sm: 'sm:text-2xl text-xl',   // ~55% of xl
-    md: 'sm:text-3xl text-2xl',  // ~70% of xl
-    lg: 'sm:text-3xl text-2xl',  // ~85% of xl (close to xl)
+    sm: 'sm:text-2xl text-xl',   // 55% of xl
+    md: 'sm:text-3xl text-2xl',  // 70% of xl
+    lg: 'sm:text-3xl text-2xl',  // 85% of xl (close to xl)
     xl: 'sm:text-4xl text-3xl',  // baseline
   }
 
@@ -38,7 +39,7 @@ export default function Clock({ is24Hour, fontSize="xl" }) {
   })
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center position-relative' style={{ zIndex: 1 }}>
       <div id='clock' className={`neon ${ fontSizeMetric[fontSize] } font-semibold tracking-wider`}>{timeString}</div>
       <div id='date' className={`mt-2 ${ midFontSizeMetric[fontSize] }`}>{dateString}</div>
     </div>
