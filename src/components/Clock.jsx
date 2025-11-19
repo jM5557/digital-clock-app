@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function Clock({ is24Hour, fontSize="xl" }) {
+export default function Clock({ is24Hour, fontSize="xl", onClick }) {
   const [now, setNow] = useState(new Date())
 
   const fontSizeMetric = {
@@ -39,7 +39,7 @@ export default function Clock({ is24Hour, fontSize="xl" }) {
   })
 
   return (
-    <div className='flex flex-col items-center position-relative' style={{ zIndex: 1 }}>
+    <div className='flex flex-col items-center position-relative' style={{ zIndex: 1 }} onClick={onClick}>
       <div id='clock' className={`neon ${ fontSizeMetric[fontSize] } font-semibold tracking-wider`}>{timeString}</div>
       <div id='date' className={`mt-2 ${ midFontSizeMetric[fontSize] }`}>{dateString}</div>
     </div>

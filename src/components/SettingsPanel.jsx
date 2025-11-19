@@ -3,6 +3,7 @@ import ToggleSwitch from './ToggleSwitch'
 import Dropdown from './Dropdown'
 import UploadButton from './UploadButton'
 import OpacitySlider from './OverlaySlider/index.jsx' // <-- import the new slider
+import BackgroundSelect from './BackgroundSelect/index.jsx'
 
 export default function SettingsPanel({
   is24Hour,
@@ -17,7 +18,8 @@ export default function SettingsPanel({
   fileInputRef,
   handleFileChange,
   overlayOpacity,
-  setOverlayOpacity,   // <-- new props
+  setOverlayOpacity,
+  closePanel
 }) {
   const handleReset = () => {
     setIs24Hour(true)
@@ -28,12 +30,19 @@ export default function SettingsPanel({
   }
 
   return (
-    <div className='controls-panel absolute top-20 right-5 p-4 rounded-xl text-neon text-sm space-y-3 w-60'style={{ zIndex: 2 }}>
+    <div className='controls-panel absolute w-[90%] md:w-auto overflow-y-auto height-[90%] top-5 right-5 bottom-5 p-4 md:p-12 rounded-xl text-neon text-sm space-y-5'style={{ zIndex: 2 }}>
+      <button
+        onClick={closePanel}
+        className='text-neon bg-gray-800 py-2 px-8 rounded-full transition md:absolute md:top-2 md:right-2 w-full md:w-auto'
+      >
+        Close
+      </button>
+
       <ToggleSwitch label='24 Hour' checked={is24Hour} onChange={() => setIs24Hour(!is24Hour)} />
 
-      <UploadButton label='Upload Background' inputRef={fileInputRef} onChange={handleFileChange} />
+      <BackgroundSelect bg={bg} setBg={setBg} bgOptions={bgOptions} /> 
 
-      <Dropdown label='Preset Background' options={bgOptions} value={bg} onChange={(e) => setBg(e.target.value)} />
+      <UploadButton label='Upload Background' inputRef={fileInputRef} onChange={handleFileChange} />
 
       <Dropdown
         label='Font'
@@ -50,12 +59,12 @@ export default function SettingsPanel({
       />
 
       <Dropdown
-        label='FontSize'
+        label='Font Size'
         options={[
-          { label: 'SM', value: 'sm' },
-          { label: 'MD', value: 'md' },
-          { label: 'LG', value: 'lg' },
-          { label: 'XL', value: 'xl' },
+          { label: 'Small', value: 'sm' },
+          { label: 'Medium', value: 'md' },
+          { label: 'Large', value: 'lg' },
+          { label: 'Extra Large', value: 'xl' },
         ]}
         value={fontSize}
         onChange={(e) => setFontSize(e.target.value)}
@@ -66,9 +75,10 @@ export default function SettingsPanel({
 
       <button
         onClick={handleReset}
-        className='w-full mt-4 bg-red-600/70 hover:bg-red-700/80 text-white py-1 rounded-md transition'
+        className='w-full mt-8 text-red-400 py-1 rounded-md transition'
       >
         Reset to Defaults
+      
       </button>
     </div>
   )

@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
+
 import bg1 from './assets/bg1.png'
 import bg2 from './assets/bg2.png'
 import bg3 from './assets/bg3.png'
+
+
 import Clock from './components/Clock'
 import SettingsPanel from './components/SettingsPanel'
 import { Settings, Maximize2 } from 'lucide-react'
@@ -20,8 +23,9 @@ export default function App() {
   const [fontSize, setFontSize] = useState('xl')
   const [bg, setBg] = useState('')
   const [showSettings, setShowSettings] = useState(false)
+  const [overlayOpacity, setOverlayOpacity] = useState(25);
+  const [showHUD, setShowHUD] = useState(true);
   const fileInputRef = useRef(null);
-  const [overlayOpacity, setOverlayOpacity] = useState(25); // New state for overlay opacity
 
   // Load saved settings on mount
 useEffect(() => {
@@ -70,6 +74,10 @@ useEffect(() => {
     }
   }
 
+  const handleShowHUDToggle = () => {
+    setShowHUD(!showHUD);
+  };
+
   return (
     <div
       className="flex flex-col justify-center items-center h-screen w-full transition-all duration-300"
@@ -93,12 +101,15 @@ useEffect(() => {
         transition: 'background-color 0.3s ease',
         zIndex: 0
       }}></div>
-      <button
-        onClick={() => setShowSettings(!showSettings)}
-        className="absolute top-5 right-5 text-neon text-3xl"
-      >
-        <Settings className="w-8 h-8" />
-      </button>
+
+      { showHUD && (  
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className="absolute top-5 right-5 text-neon text-3xl"
+        >
+          <Settings className="w-8 h-8" />
+        </button>
+      )}
 
       {showSettings && (
         <SettingsPanel
@@ -115,17 +126,20 @@ useEffect(() => {
           handleFileChange={handleFileChange}
           overlayOpacity={overlayOpacity}
           setOverlayOpacity={setOverlayOpacity}
+          closePanel={() => setShowSettings(false)}
         />
       )}
 
-      <Clock is24Hour={is24Hour} fontSize={fontSize} />
+      <Clock is24Hour={is24Hour} fontSize={fontSize} onClick={handleShowHUDToggle} />
 
-      <button
-        onClick={handleFullscreenToggle}
-        className="fixed right-4 bottom-4 bg-black/60 text-white px-3 py-1 rounded-lg text-sm hover:bg-black/80 flex items-center gap-2"
-      >
-        <Maximize2 className="w-4 h-4" /> Fullscreen
-      </button>
+      { showHUD && (
+        <button
+          onClick={handleFullscreenToggle}
+          className="fixed right-4 bottom-4 bg-black/60 text-white px-3 py-1 rounded-lg text-sm hover:bg-black/80 flex items-center gap-2"
+        >
+          <Maximize2 className="w-4 h-4" /> Fullscreen
+        </button>
+      )}
     </div>
   )
 }

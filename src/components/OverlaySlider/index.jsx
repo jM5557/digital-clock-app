@@ -6,7 +6,7 @@ export default function OverlaySlider({ overlayOpacity, setOverlayOpacity }) {
     <div className="flex flex-col space-y-2">
       <label
         htmlFor="overlayOpacity"
-        className="text-sm font-medium text-slate-400"
+        className="text-xs tracking-wide text-slate-400"
       >
         Overlay Opacity ({overlayOpacity}%)
       </label>
