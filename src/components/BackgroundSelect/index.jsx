@@ -7,8 +7,12 @@ export default function BackgroundSelect({ bg, setBg, bgOptions }) {
             <div className="flex flex-row space-6 flex-wrap">
                 { bgOptions.map((option) => {
                     if (!option.value) return (
-                        <div className={objectValue('')} key="none" onClick={() => setBg('')}>No Background</div>
-                    ); // skip empty option
+                        <div 
+                            className={objectValue('')} 
+                            key="none" 
+                            onClick={() => setBg('')}
+                        >No Background</div>
+                    );
 
                     return (
                         <img 

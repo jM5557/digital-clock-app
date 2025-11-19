@@ -6,8 +6,9 @@ import bg3 from './assets/bg3.png'
 
 
 import Clock from './components/Clock'
-import SettingsPanel from './components/SettingsPanel'
+import SettingsPanel from './components/SettingsPanel/index'
 import { Settings, Maximize2 } from 'lucide-react'
+import { dateFormats } from './components/SettingsPanel/settings'
 
 // Background options
 const BG_OPTIONS = [
@@ -25,6 +26,7 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false)
   const [overlayOpacity, setOverlayOpacity] = useState(25);
   const [showHUD, setShowHUD] = useState(true);
+  const [dateFormat, setDateFormat] = useState(dateFormats[0].value);
   const fileInputRef = useRef(null);
 
   // Load saved settings on mount
@@ -40,6 +42,7 @@ useEffect(() => {
       setBg(parsed.bg ?? '');
       setFontSize(parsed.fontSize ?? 'xl');
       setOverlayOpacity(parsed.overlayOpacity ?? 25);
+      setDateFormat(parsed.dateFormat ?? dateFormats[0].value);
     } catch (err) {
       console.error('Failed to parse saved settings', err);
     }
@@ -52,9 +55,16 @@ useEffect(() => {
   useEffect(() => {
     localStorage.setItem(
       'clockSettings',
-      JSON.stringify({ is24Hour, font, bg, fontSize, overlayOpacity })
+      JSON.stringify({ 
+        is24Hour, 
+        font, 
+        bg, 
+        fontSize, 
+        overlayOpacity,
+        dateFormat
+      })
     )
-  }, [is24Hour, font, fontSize, bg, overlayOpacity])
+  }, [is24Hour, font, fontSize, bg, overlayOpacity, dateFormat])
 
   // Handle user-uploaded images
   const handleFileChange = (e) => {
@@ -111,7 +121,6 @@ useEffect(() => {
         </button>
       )}
 
-      {showSettings && (
         <SettingsPanel
           is24Hour={is24Hour}
           setIs24Hour={setIs24Hour}
@@ -126,11 +135,18 @@ useEffect(() => {
           handleFileChange={handleFileChange}
           overlayOpacity={overlayOpacity}
           setOverlayOpacity={setOverlayOpacity}
+          isOpen={showSettings}
           closePanel={() => setShowSettings(false)}
+          dateFormat={dateFormat}
+          setDateFormat={setDateFormat}
         />
-      )}
 
-      <Clock is24Hour={is24Hour} fontSize={fontSize} onClick={handleShowHUDToggle} />
+      <Clock 
+        dateFormat={dateFormat} 
+        is24Hour={is24Hour} 
+        fontSize={fontSize} 
+        onClick={handleShowHUDToggle} 
+      />
 
       { showHUD && (
         <button

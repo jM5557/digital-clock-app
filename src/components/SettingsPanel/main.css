@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes grow-fade-in {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-in {
+    animation: grow-fade-in 0.24s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+}

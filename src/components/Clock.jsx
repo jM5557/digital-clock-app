@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { format } from 'date-fns';
 
-export default function Clock({ is24Hour, fontSize="xl", onClick }) {
+export default function Clock({ is24Hour, fontSize="xl", onClick, dateFormat="yyyy-MM-dd" }) {
   const [now, setNow] = useState(new Date())
 
   const fontSizeMetric = {
@@ -36,12 +37,14 @@ export default function Clock({ is24Hour, fontSize="xl", onClick }) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  })
+  });
+
+  const formattedDate = format(now, dateFormat);
 
   return (
     <div className='flex flex-col items-center position-relative' style={{ zIndex: 1 }} onClick={onClick}>
       <div id='clock' className={`neon ${ fontSizeMetric[fontSize] } font-semibold tracking-wider`}>{timeString}</div>
-      <div id='date' className={`mt-2 ${ midFontSizeMetric[fontSize] }`}>{dateString}</div>
+      <div id='date' className={`mt-2 ${ midFontSizeMetric[fontSize] }`}>{formattedDate}</div>
     </div>
   )
 }
